@@ -74,3 +74,10 @@
   z-index: 3;
 }
 
+@media (max-width: 450px) {
+  .animation-container{
+    width: 145vw;
+    height: 145vh;
+    left: -20%;
+  }
+}
