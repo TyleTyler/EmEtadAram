@@ -8,15 +8,17 @@ function App() {
   const [scrollStatus, setScrollStatus] = useState(0);
   const [isReversed, setIsReversed] = useState(false);
   const [idle, setIdle] = useState(true)
+  const [timeoutId, setTimeoutId] = useState(null); // State to store the timeout ID
 
   useEffect(() => {
     
     const handleScroll = () => {
-      setIdle(false)
-      setTimeout(() => {
-        clearTimeout()
+      setIdle(false);
+      clearTimeout(timeoutId); // Clear previous timeout if it exists
+      const newTimeoutId = setTimeout(() => {
         setIdle(true);
       }, 5000);
+      setTimeoutId(newTimeoutId); // Store the new timeout ID
       
       const currentY = window.scrollY;
       if (prevY < currentY) {
@@ -43,8 +45,9 @@ function App() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeoutId)
     };
-  }, [prevY, scrollStatus]);
+  }, [prevY, scrollStatus, timeoutId]);
 
 
   // Calculate the frame number 5 frames before the end of the animation
